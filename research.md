@@ -39,6 +39,9 @@ pip install --upgrade pymupdf
 import pymupdf
 
 doc = pymupdf.open("a.pdf") # open a document
+
+# 2nd option
+doc = pymupdf.Document("a.pdf")
 ```
 2. Iterate over pages
 
