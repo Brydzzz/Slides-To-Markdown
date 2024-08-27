@@ -60,6 +60,7 @@ for page_index in range(len(doc)): # iterate over pdf pages
     filename = f"slide{page_index}.jpg"
     pix.save(filename, output="jpg") # save pdf page to jpg
 ```
+[get_pixmap()](https://pymupdf.readthedocs.io/en/latest/page.html#Page.get_pixmap)
 
 ## GUI - Tkinter for now
 
