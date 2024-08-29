@@ -33,16 +33,17 @@ root = tk.Tk()
 root.title("Slides to Markdown")
 root.geometry("500x300")
 
-
+# Content Frame Config
 content = tk.Frame(
-    root,
+    master=root,
     padx=10,
     pady=10,
     bg=DRACULA_PALETTE["background"],
 )
 
+# Info Frame Config
 info_frame = tk.Frame(
-    content,
+    master=content,
     width=200,
     height=100,
     relief="solid",
@@ -52,11 +53,23 @@ info_frame = tk.Frame(
     highlightthickness=2,
     bd=0,
 )
+label_font = tkFont.Font(family="Fira Code", size=10)
 
+info_label = tk.Label(
+    master=info_frame,
+    font=label_font,
+    text="Selected File: N/A\nSelected Directory: N/A\nLogs:",
+    justify="left",
+    fg=DRACULA_PALETTE["green"],
+    background=DRACULA_PALETTE["background"],
+)
+
+# Font for buttons
 btn_font = tkFont.Font(family="Fira Code", size=12)
 
+# Buttons Config
 filebtn = tk.Button(
-    content,
+    master=content,
     text="Choose File",
     command=get_filename,
     width=1,
@@ -68,9 +81,8 @@ filebtn = tk.Button(
     relief="flat",
 )
 
-
 dirbtn = tk.Button(
-    content,
+    master=content,
     text="Choose Directory",
     command=get_directory,
     width=1,
@@ -82,7 +94,7 @@ dirbtn = tk.Button(
     relief="flat",
 )
 createbtn = tk.Button(
-    content,
+    master=content,
     text="Create .md file",
     font=btn_font,
     bg=DRACULA_PALETTE["selection"],
@@ -93,17 +105,20 @@ createbtn = tk.Button(
 )
 
 
+# Layout Config
 content.grid(column=0, row=0, sticky="N S E W")
 info_frame.grid(column=0, row=0, sticky="N S E W", columnspan=2, rowspan=2)
 
 filebtn.grid(column=0, row=2, columnspan=1, sticky="E W", padx=10)
 dirbtn.grid(column=1, row=2, columnspan=1, sticky="E W", padx=10)
 createbtn.grid(column=0, row=3, columnspan=2, sticky="E W", padx=10)
+info_label.grid(column=0, row=0)
 
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 content.columnconfigure(0, weight=2)
 content.columnconfigure(1, weight=2)
+content.rowconfigure(0, weight=1)
 content.rowconfigure(1, weight=1)
 content.rowconfigure(2, weight=1)
 
