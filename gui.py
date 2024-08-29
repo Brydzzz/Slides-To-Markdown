@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
-
+import tkinter.font as tkFont
 
 DRACULA_PALETTE = {
     "background": "#282a36",  # Dark grayish blue
@@ -53,21 +53,52 @@ info_frame = tk.Frame(
     bd=0,
 )
 
+btn_font = tkFont.Font(family="Fira Code", size=12)
+
 filebtn = tk.Button(
-    content, text="Choose File", command=get_filename, width=1
+    content,
+    text="Choose File",
+    command=get_filename,
+    width=1,
+    font=btn_font,
+    bg=DRACULA_PALETTE["selection"],
+    fg=DRACULA_PALETTE["cyan"],
+    activeforeground=DRACULA_PALETTE["foreground"],
+    activebackground=DRACULA_PALETTE["comment"],
+    relief="flat",
 )
+
+
 dirbtn = tk.Button(
-    content, text="Choose Directory", command=get_directory, width=1
+    content,
+    text="Choose Directory",
+    command=get_directory,
+    width=1,
+    font=btn_font,
+    bg=DRACULA_PALETTE["selection"],
+    fg=DRACULA_PALETTE["yellow"],
+    activeforeground=DRACULA_PALETTE["foreground"],
+    activebackground=DRACULA_PALETTE["comment"],
+    relief="flat",
 )
-createbtn = tk.Button(content, text="Create .md file", padx=10, pady=10)
+createbtn = tk.Button(
+    content,
+    text="Create .md file",
+    font=btn_font,
+    bg=DRACULA_PALETTE["selection"],
+    fg=DRACULA_PALETTE["pink"],
+    activeforeground=DRACULA_PALETTE["foreground"],
+    activebackground=DRACULA_PALETTE["comment"],
+    relief="flat",
+)
 
 
 content.grid(column=0, row=0, sticky="N S E W")
 info_frame.grid(column=0, row=0, sticky="N S E W", columnspan=2, rowspan=2)
 
-filebtn.grid(column=0, row=2, columnspan=1, sticky="E W")
-dirbtn.grid(column=1, row=2, columnspan=1, sticky="E W")
-createbtn.grid(column=0, row=3, columnspan=2, sticky="E W")
+filebtn.grid(column=0, row=2, columnspan=1, sticky="E W", padx=10)
+dirbtn.grid(column=1, row=2, columnspan=1, sticky="E W", padx=10)
+createbtn.grid(column=0, row=3, columnspan=2, sticky="E W", padx=10)
 
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
