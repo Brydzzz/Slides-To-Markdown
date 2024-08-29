@@ -204,5 +204,6 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("Slides to Markdown")
     root.geometry("500x300")
+    root.iconbitmap("logo.ico")
     MainApplication(parent=root).pack(side="top", fill="both", expand=True)
     root.mainloop()
