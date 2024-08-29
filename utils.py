@@ -30,7 +30,7 @@ def generate_md_file(filepath: Path, dirpath: Path):
             slide_relative_path = slide_img.relative_to(dirpath)
             image_line = (
                 f"![{slide_img.stem}]({slide_relative_path})\n\n"
-                f"- [ ] completed \n\n**Notatki:** \n\n---\n\n"
+                f"- [ ] completed \n\n**Notes:** \n\n---\n\n"
             )
             f.write(image_line)
         return
