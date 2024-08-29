@@ -175,7 +175,9 @@ class MainApplication(tk.Frame):
 
     # Button functions
     def get_filename(self):
-        self.filename = filedialog.askopenfilename()
+        self.filename = filedialog.askopenfilename(
+            filetypes=[("pdf file", "*.pdf")]
+        )
         self.file_label.update_text(self.filename)
 
     def get_directory(self):
