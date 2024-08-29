@@ -1,6 +1,8 @@
+from pathlib import Path
 import tkinter as tk
 from tkinter import filedialog
 import tkinter.font as tkFont
+from utils import generate_images, generate_md_file
 
 DRACULA_PALETTE = {
     "background": "#282a36",  # Dark grayish blue
@@ -187,6 +189,11 @@ class MainApplication(tk.Frame):
     def create_md_file(self):
         if self.filename and self.directory:
             self.log_label.update_log_info("Processing the pdf...")
+            generate_images(Path(self.filename), Path(self.directory))
+            self.log_label.update_log_info("File processing done.")
+            self.log_label.update_log_info("Generating markdown file..")
+            generate_md_file(Path(self.filename), Path(self.directory))
+            self.log_label.update_log_info("Markdown file generated !!!")
         else:
             self.log_label.update_log_info(
                 "File or directory are not selected"

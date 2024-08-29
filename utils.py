@@ -2,16 +2,35 @@ from pathlib import Path
 import pymupdf
 import os
 
-doc_path = "test_file.pdf"
-doc = pymupdf.open(filename=doc_path, filetype="pdf")
 
-doc_filename = os.path.splitext(doc_path)[0]
-images_path = f"images_{doc_filename}"
-if not os.path.isdir(images_path):
-    os.mkdir(images_path)
+def generate_images(filepath: Path, dirpath: Path):
+    document = pymupdf.open(filename=filepath, filetype="pdf")
+    file_name_without_ext = filepath.stem
 
-for page_index in range(len(doc)):
-    page = doc[page_index]
-    pix = page.get_pixmap(dpi=160)
-    jpg_path = f"images_{doc_filename}/slide{page_index+1}.jpg"
-    pix.save(Path(jpg_path), output="jpg")
+    images_path = dirpath / f"images_{file_name_without_ext}"
+    if not images_path.exists():
+        os.mkdir(images_path)
+
+    digits = len(str(document.page_count))
+    for page_idx in range(len(document)):
+        page = document[page_idx]
+        pixmap = page.get_pixmap(dpi=160)
+        jpg_path = images_path / f"slide{str(page_idx+1).zfill(digits)}.jpg"
+        pixmap.save(jpg_path, output="jpg")
+
+
+def generate_md_file(filepath: Path, dirpath: Path):
+    file_name_without_ext = filepath.stem
+    images_path = dirpath / f"images_{file_name_without_ext}"
+
+    with open(dirpath / f"{file_name_without_ext}.md", "w") as f:
+        f.write(f"# {file_name_without_ext}\n")
+        slides = sorted(images_path.glob("*.jpg"))
+        for slide_img in slides:
+            slide_relative_path = slide_img.relative_to(dirpath)
+            image_line = (
+                f"![{slide_img.stem}]({slide_relative_path})\n\n"
+                f"- [ ] completed \n\n**Notatki:** \n\n---\n\n"
+            )
+            f.write(image_line)
+        return
