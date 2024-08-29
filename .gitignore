@@ -1,5 +1,7 @@
 *.jpg
+!screenshot.jpg
 *.pdf
+research.md
 clean.sh
 __pycache__/
 .vscode/
