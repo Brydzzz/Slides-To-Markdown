@@ -1,6 +1,6 @@
 # Slides To Markdown 0.1
 
-Simple tool that can create a markdown note template from a pdf file
+A simple tool that converts PDF slides into a markdown note template.
 
 <img alt="logo" src="assets/logo.png" height=100 width=100>
 
