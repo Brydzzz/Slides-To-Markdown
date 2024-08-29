@@ -23,7 +23,7 @@ class WrappingInfoLabel(tk.Label):
     has a static text attribute that wont change when using update_text()"""
 
     def __init__(self, master=None, static_text=None, **kwargs):
-        tk.Label.__init__(self, master, **kwargs, text=static_text)
+        tk.Label.__init__(self, master, text=static_text, **kwargs)
         self.stext = static_text
         self.bind("<Configure>", self.update_wrap)
 
@@ -33,6 +33,27 @@ class WrappingInfoLabel(tk.Label):
     def update_text(self, new_text):
         updated_text = f"{self.stext}\t{new_text}"
         self.config(text=updated_text)
+
+
+class LogLabel(WrappingInfoLabel):
+    def __init__(
+        self, master=None, static_text="Logs:", max_logs=5, **kwargs
+    ):
+        WrappingInfoLabel.__init__(
+            self, master, static_text=static_text, **kwargs
+        )
+        self.max_logs = max_logs
+        self.logs_count = 0
+
+    def update_log_info(self, new_log):
+        if self.logs_count < self.max_logs:
+            old_text = self["text"]
+            new_text = f"{old_text}\n{new_log}"
+            self.logs_count += 1
+        else:
+            new_text = f"{self.stext}\n{new_log}"
+            self.logs_count = 1
+        self.config(text=new_text)
 
 
 class MainApplication(tk.Frame):
@@ -79,7 +100,7 @@ class MainApplication(tk.Frame):
             background=DRACULA_PALETTE["background"],
             anchor="w",
         )
-        self.log_label = WrappingInfoLabel(
+        self.log_label = LogLabel(
             master=info_frame,
             font=label_font,
             static_text="Logs:",
@@ -121,6 +142,7 @@ class MainApplication(tk.Frame):
         createbtn = tk.Button(
             master=self,
             text="Create .md file",
+            command=self.create_md_file,
             font=btn_font,
             bg=DRACULA_PALETTE["selection"],
             fg=DRACULA_PALETTE["pink"],
@@ -151,12 +173,6 @@ class MainApplication(tk.Frame):
         self.rowconfigure(1, weight=1)
         self.rowconfigure(2, weight=1)
 
-    # Label Functions
-    def update_log_info(self, log):
-        old_text = self.log_label["text"]
-        new_text = f"{old_text}\t{log}"
-        self.log_label.config(text=new_text)
-
     # Button functions
     def get_filename(self):
         self.filename = filedialog.askopenfilename()
@@ -165,6 +181,9 @@ class MainApplication(tk.Frame):
     def get_directory(self):
         self.directory = filedialog.askdirectory()
         self.dir_label.update_text(self.directory)
+
+    def create_md_file(self):
+        self.log_label.update_log_info("Checking requirements...")
 
 
 if __name__ == "__main__":
