@@ -10,7 +10,7 @@ A simple tool that converts PDF slides into a markdown note template.
 
 ## Installation
 
-1. Download the project zip
+1. Download the project zip or clone it
 2. Setup python virtual environment (recommended)
 
 For example:
