@@ -2,6 +2,7 @@
 !screenshot.jpg
 *.pdf
 research.md
+test_dir/
 clean.sh
 __pycache__/
 .vscode/
