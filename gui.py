@@ -183,7 +183,12 @@ class MainApplication(tk.Frame):
         self.dir_label.update_text(self.directory)
 
     def create_md_file(self):
-        self.log_label.update_log_info("Checking requirements...")
+        if self.filename and self.directory:
+            self.log_label.update_log_info("Processing the pdf...")
+        else:
+            self.log_label.update_log_info(
+                "File or directory are not selected"
+            )
 
 
 if __name__ == "__main__":
