@@ -67,6 +67,14 @@ for page_index in range(len(doc)): # iterate over pdf pages
 
 ## GUI - Tkinter for now
 
+This trick show how to add a border color to frame. These are the important configurations:
+```python
+ highlightbackground="your border color here"
+ highlightcolor="your border color here"
+ highlightthickness="the border width"
+ bd= 0
+```
+
 ## Markdown
 
 ## Stack Overflow Links
