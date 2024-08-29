@@ -39,8 +39,9 @@ class MainApplication(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         tk.Frame.__init__(self, master=parent, *args, **kwargs)
         self.parent = parent
-
         self.configure(padx=10, pady=10, bg=DRACULA_PALETTE["background"])
+        self.filename = None
+        self.directory = None
 
         # Info Frame Config
         info_frame = tk.Frame(
@@ -57,11 +58,10 @@ class MainApplication(tk.Frame):
             pady=5,
         )
 
-        # Labels Section
-
+        # Labels Config
         label_font = tkFont.Font(family="Fira Code", size=10)
 
-        info_label1 = WrappingInfoLabel(
+        self.file_label = WrappingInfoLabel(
             master=info_frame,
             font=label_font,
             static_text="Selected File:",
@@ -70,7 +70,7 @@ class MainApplication(tk.Frame):
             background=DRACULA_PALETTE["background"],
             anchor="w",
         )
-        info_label2 = WrappingInfoLabel(
+        self.dir_label = WrappingInfoLabel(
             master=info_frame,
             font=label_font,
             static_text="Selected Directory:",
@@ -79,7 +79,7 @@ class MainApplication(tk.Frame):
             background=DRACULA_PALETTE["background"],
             anchor="w",
         )
-        info_label3 = WrappingInfoLabel(
+        self.log_label = WrappingInfoLabel(
             master=info_frame,
             font=label_font,
             static_text="Logs:",
@@ -89,23 +89,6 @@ class MainApplication(tk.Frame):
             anchor="w",
         )
 
-        # Label Functions
-        def update_log_info(log):
-            old_text = info_label3["text"]
-            new_text = f"{old_text}\t{log}"
-            info_label3.config(text=new_text)
-
-        # Button functions
-        def get_filename():
-            filename = filedialog.askopenfilename()
-            info_label1.update_text(filename)
-            print(filename)
-
-        def get_directory():
-            directory = filedialog.askdirectory()
-            info_label2.update_text(directory)
-            print(directory)
-
         # Font for buttons
         btn_font = tkFont.Font(family="Fira Code", size=12)
 
@@ -113,7 +96,7 @@ class MainApplication(tk.Frame):
         filebtn = tk.Button(
             master=self,
             text="Choose File",
-            command=get_filename,
+            command=self.get_filename,
             width=1,
             font=btn_font,
             bg=DRACULA_PALETTE["selection"],
@@ -126,7 +109,7 @@ class MainApplication(tk.Frame):
         dirbtn = tk.Button(
             master=self,
             text="Choose Directory",
-            command=get_directory,
+            command=self.get_directory,
             width=1,
             font=btn_font,
             bg=DRACULA_PALETTE["selection"],
@@ -156,9 +139,9 @@ class MainApplication(tk.Frame):
         dirbtn.grid(column=1, row=2, columnspan=1, sticky="E W", padx=10)
         createbtn.grid(column=0, row=3, columnspan=2, sticky="E W", padx=10)
 
-        info_label1.grid(column=0, row=0, padx=5, sticky="E W")
-        info_label2.grid(column=0, row=1, padx=5, sticky="E W")
-        info_label3.grid(column=0, row=2, padx=5, sticky="E W")
+        self.file_label.grid(column=0, row=0, padx=5, sticky="E W")
+        self.dir_label.grid(column=0, row=1, padx=5, sticky="E W")
+        self.log_label.grid(column=0, row=2, padx=5, sticky="E W")
 
         root.columnconfigure(0, weight=1)
         root.rowconfigure(0, weight=1)
@@ -167,6 +150,21 @@ class MainApplication(tk.Frame):
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
         self.rowconfigure(2, weight=1)
+
+    # Label Functions
+    def update_log_info(self, log):
+        old_text = self.log_label["text"]
+        new_text = f"{old_text}\t{log}"
+        self.log_label.config(text=new_text)
+
+    # Button functions
+    def get_filename(self):
+        self.filename = filedialog.askopenfilename()
+        self.file_label.update_text(self.filename)
+
+    def get_directory(self):
+        self.directory = filedialog.askdirectory()
+        self.dir_label.update_text(self.directory)
 
 
 if __name__ == "__main__":
