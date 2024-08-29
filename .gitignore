@@ -2,3 +2,4 @@
 *.pdf
 clean.sh
 __pycache__/
+.vscode/
